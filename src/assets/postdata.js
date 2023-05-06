@@ -16,7 +16,7 @@ export default [
     likes: 20,
     date: "Apr 20",
     liked: false,
-    content: "흔한 자랑스타그램",
+    content: "자랑하려고 올린 글",
     filter: "clarendon",
   },
   {
@@ -26,7 +26,7 @@ export default [
     likes: 49,
     date: "Apr 4",
     liked: false,
-    content: "우리집 개는 화장실 물도 내림",
+    content: "우리집 동물사진",
     filter: "lofi",
   },
 ];

@@ -4,18 +4,19 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="step++">Next</li>
+      <li v-if="step == 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :step="step" :Data="Data" />
+  <Container @write="write = $event" :step="step" :Data="Data" :image="image" />
   <button @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
-      <label for="file" class="input-plus">+</label>
+      <input @change="upload" type="file" id="file" class="inputfile" />
+      <label for="file" class="input-plus">Upload</label>
     </ul>
   </div>
 </template>
@@ -32,17 +33,46 @@ export default {
     return {
       step: 0,
       Data: postdata,
+      image: "",
+      write: "",
     };
+  },
+  mounted() {
+    this.emitter.on("name", (a) => {
+      console.log(a);
+    });
   },
   components: {
     Container,
   },
   methods: {
+    publish() {
+      let mypost = {
+        name: "Minny",
+        userImage: "https://placeimg.com/100/100/animals",
+        postImage: this.image,
+        likes: 40,
+        date: "Apr 4",
+        liked: false,
+        content: this.write,
+        filter: "lofi",
+      };
+      this.Data.unshift(mypost);
+      this.step = 0;
+    },
     more() {
       axios.get(`https://port-0-vue-sns-server-5x7y2mlhanapjt.sel4.cloudtype.app/list`).then((result) => {
         console.log(result.data.list);
         console.log(this.Data.push(result.data.list[0]));
       });
+    },
+    upload(e) {
+      let file = e.target.files;
+      console.log(file[0].type);
+      let url = URL.createObjectURL(file[0]);
+      console.log(url);
+      this.image = url;
+      this.step++;
     },
   },
 };

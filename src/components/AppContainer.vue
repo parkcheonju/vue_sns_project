@@ -4,33 +4,43 @@
   </div>
 
   <div v-if="step == 1">
-    <div class="upload-image"></div>
+    <div :class="clickfilter" class="upload-image" :style="`background-image:url(${image})`"></div>
     <div class="filters">
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
+      <FilterBox :filter="filter" :image="image" v-for="filter in filterData" :key="filter">{{ filter }}</FilterBox>
     </div>
   </div>
 
   <div v-if="step == 2">
-    <div class="upload-image"></div>
+    <div class="upload-image" :style="`background-image:url(${image})`"></div>
     <div class="write">
-      <textarea class="write-box">write!</textarea>
+      <textarea @input="$emit('write', $event.target.value)" class="write-box">write!</textarea>
     </div>
   </div>
 </template>
 
 <script>
 import Post from "./AppPost.vue";
+import FilterBox from "./AppFilterbox.vue";
 export default {
+  data() {
+    return {
+      filterData: ["aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
+      clickfilter: "",
+    };
+  },
+  mounted() {
+    this.emiiter.on("clickbox", (a) => {
+      this.clickfilter = a
+    });
+  },
   components: {
     Post,
+    FilterBox,
   },
   props: {
     Data: Array,
     step: Number,
+    image: String,
   },
 };
 </script>
