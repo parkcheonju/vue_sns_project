@@ -6,12 +6,12 @@
     </div>
     <div :class="`${Data.filter} post-body`" :style="{ backgroundImage: `url(${Data.postImage})` }"></div>
     <div class="post-content">
-      <p>{{ Data.likes }}</p>
-      <p>
-        <strong>{{ Data.name }}</strong
-        >{{ Data.content }}
-      </p>
-      <p class="date">{{ Data.date }}</p>
+      <ul>
+        <li>좋아요 :{{ Data.likes }}</li>
+        <li><strong>작성자 :{{ Data.name }}</strong></li>
+        <li>{{ Data.content }}</li>
+        <li class="date">작성일:{{ Data.date }}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -58,9 +58,11 @@ export default {
   padding-right: 15px;
   font-size: 14px;
 }
+.post-content ul li{
+  margin-top: 10px;
+}
 .date {
-  font-size: 11px;
+  font-size: 12px;
   color: grey;
-  margin-top: -8px;
 }
 </style>

@@ -7,15 +7,15 @@
 <script>
 export default {
   name: "AppFilterbox",
+  methods: {
+    fire() {
+      this.emitter.emit("clickbox", this.filter)
+      console.log(this.filter)
+    },
+  },
   props: {
     image: String,
     filter: String,
-  },
-  methods: {
-    fire() {
-      this.emitter.emit("clickbox", this.filter);
-      console.log(this.emitter.emit("clickbox", this.filter))
-    },
   },
 };
 </script>

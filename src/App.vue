@@ -1,7 +1,8 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li v-if="step == 1" @click="step--">Prev</li>
+      <li v-if="step == 2" @click="step--">Prev</li>
     </ul>
     <ul class="header-button-right">
       <li v-if="step == 1" @click="step++">Next</li>
@@ -10,15 +11,16 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container @write="write = $event" :step="step" :Data="Data" :image="image" />
-  <button @click="more">더보기</button>
+  <Container @write="write = $event" :step="step" :Data="Data" :image="image"/>
+  <button @click="more" v-if="step == 0">더보기</button>
 
-  <div class="footer">
+  <div class="footer" v-if="step == 0">
     <ul class="footer-button-plus">
       <input @change="upload" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">Upload</label>
     </ul>
   </div>
+
 </template>
 
 <script>
@@ -35,10 +37,12 @@ export default {
       Data: postdata,
       image: "",
       write: "",
+      clickfilter: "",
     };
   },
   mounted() {
-    this.emitter.on("name", (a) => {
+    this.emitter.on("clickbox", (a) => {
+      this.clickfilter = a;
       console.log(a);
     });
   },
@@ -55,7 +59,7 @@ export default {
         date: "Apr 4",
         liked: false,
         content: this.write,
-        filter: "lofi",
+        filter: this.clickfilter,
       };
       this.Data.unshift(mypost);
       this.step = 0;
@@ -81,10 +85,14 @@ export default {
 <style>
 body {
   margin: 0;
+  background-color: #f5f5f51a;
 }
 ul {
   padding: 5px;
   list-style-type: none;
+}
+div{
+  background-color: #fff;
 }
 .logo {
   width: 22px;

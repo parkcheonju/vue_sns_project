@@ -4,17 +4,19 @@
   </div>
 
   <div v-if="step == 1">
-    <div :class="clickfilter" class="upload-image" :style="`background-image:url(${image})`"></div>
+    <div :class="`${clickfilter} upload-image`" :style="`background-image:url(${image})`"></div>
     <div class="filters">
-      <FilterBox :filter="filter" :image="image" v-for="filter in filterData" :key="filter">{{ filter }}</FilterBox>
+      <FilterBox :filter="filter" :image="image" v-for="filter in filterData" :key="filter" class="filter-font">{{ filter }}</FilterBox>
     </div>
+    <div class="guide">필터를 선택 후, 우측 상단의 <span class="guide-red">Next 버튼</span>을 눌러주세요!</div>
   </div>
 
   <div v-if="step == 2">
-    <div class="upload-image" :style="`background-image:url(${image})`"></div>
+    <div :class="`${clickfilter}`" class="upload-image" :style="`background-image:url(${image})`"></div>
     <div class="write">
-      <textarea @input="$emit('write', $event.target.value)" class="write-box">write!</textarea>
+      <textarea @input="$emit('write', $event.target.value)" class="write-box">마음껏 작성해 보세요!</textarea>
     </div>
+    <div class="guide">Text 작성 후, 우측 상단의 <span class="guide-red">발행 버튼</span>을 눌러주세요!</div>
   </div>
 </template>
 
@@ -25,12 +27,13 @@ export default {
   data() {
     return {
       filterData: ["aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
-      clickfilter: "",
+      clickfilter: '',
     };
   },
   mounted() {
-    this.emiiter.on("clickbox", (a) => {
-      this.clickfilter = a
+    this.emitter.on("clickbox", (a) => {
+      this.clickfilter = a;
+      console.log(a)
     });
   },
   components: {
@@ -46,6 +49,18 @@ export default {
 </script>
 
 <style>
+.filter-font{
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+.guide{
+  padding: 30px 0;
+  margin-left: 20px;
+}
+.guide-red{
+  color: red;
+}
 .upload-image {
   width: 100%;
   height: 450px;
