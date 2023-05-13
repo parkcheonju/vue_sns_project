@@ -3,17 +3,20 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
-      name: "kim",
-      age: 37,
+      likes: 0,
+      likeclick: false,
     };
   },
   mutations: {
-    changeName(state) {
-      state.name = "park";
+    likeon(state) {
+      if (state.likeclick === false) {
+        state.likes++;
+        state.likeclick = true;
+      } else {
+        state.likes--;
+        state.likeclick = false;
+      }
     },
-    numplus(state){
-      state.age++
-    }
   },
 });
 

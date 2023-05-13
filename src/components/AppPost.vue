@@ -4,11 +4,14 @@
       <div class="profile"></div>
       <span class="profile-name">{{ Data.name }}</span>
     </div>
-    <div :class="`${Data.filter} post-body`" :style="{ backgroundImage: `url(${Data.postImage})` }"></div>
+    <div @click="$store.commit('likeon')" :class="`${Data.filter} post-body`" :style="{ backgroundImage: `url(${Data.postImage})` }"></div>
     <div class="post-content">
       <ul>
-        <li>좋아요 :{{ Data.likes }}</li>
-        <li><strong>작성자 :{{ Data.name }}</strong></li>
+        <!-- <li>좋아요 :{{ Data.likes }}</li> -->
+        <li>좋아요 :{{ $store.state.likes }}</li>
+        <li>
+          <strong>작성자 :{{ Data.name }}</strong>
+        </li>
         <li>{{ Data.content }}</li>
         <li class="date">작성일:{{ Data.date }}</li>
       </ul>
@@ -20,6 +23,7 @@
 export default {
   props: {
     Data: Object,
+    i: Number,
   },
 };
 </script>
@@ -58,7 +62,7 @@ export default {
   padding-right: 15px;
   font-size: 14px;
 }
-.post-content ul li{
+.post-content ul li {
   margin-top: 10px;
 }
 .date {
